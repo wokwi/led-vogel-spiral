@@ -1,10 +1,17 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background: black;
+  margin: 0;
+  padding: 48px 16px;
+  background: transparent;
 }
 
 #pixels {
   display: block;
-  width: min(500px, 100vmin);
-  height: min(500px, 100vmin);
+  width: min(500px, 100vw - 32px);
+  height: min(500px, 100vw - 32px);
   margin: 0 auto;
 }
