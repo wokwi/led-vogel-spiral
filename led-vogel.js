@@ -81,11 +81,12 @@ gl.useProgram(program);
 function getUniformLocation(program, name) {
   var uniformLocation = gl.getUniformLocation(program, name);
   if (uniformLocation === null) {
-    console.warn("Cannot find uniform", name);
+    console.warn('Cannot find uniform', name);
   }
   return uniformLocation;
 }
 
+// prettier-ignore
 const positionsData = new Float32Array([
   -1, -1, -1,
   1, -1, -1,
@@ -102,8 +103,8 @@ const attribute = gl.getAttribLocation(program, 'position');
 gl.enableVertexAttribArray(attribute);
 gl.vertexAttribPointer(attribute, 3, gl.FLOAT, false, 0, 0);
 
-const resHandle = getUniformLocation(program, "u_resolution");
-const pixelsHandle = getUniformLocation(program, "u_pixels");
+const resHandle = getUniformLocation(program, 'u_resolution');
+const pixelsHandle = getUniformLocation(program, 'u_pixels');
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 gl.viewport(0, 0, canvas.width, canvas.height);
@@ -120,17 +121,33 @@ const srcFormat = gl.RGBA;
 const srcType = gl.UNSIGNED_BYTE;
 const pixels = new Uint32Array(height * width);
 
-gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-              width, height, border, srcFormat, srcType,
-              new Uint8Array(pixels.buffer));
+gl.texImage2D(
+  gl.TEXTURE_2D,
+  level,
+  internalFormat,
+  width,
+  height,
+  border,
+  srcFormat,
+  srcType,
+  new Uint8Array(pixels.buffer),
+);
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 
 function draw() {
   gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-              width, height, border, srcFormat, srcType,
-              new Uint8Array(pixels.buffer));
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    level,
+    internalFormat,
+    width,
+    height,
+    border,
+    srcFormat,
+    srcType,
+    new Uint8Array(pixels.buffer),
+  );
 
   gl.uniform1i(pixelsHandle, texture);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
