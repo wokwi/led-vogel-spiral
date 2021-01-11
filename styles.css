@@ -1,0 +1,10 @@
+body {
+  background: black;
+}
+
+#pixels {
+  display: block;
+  width: min(500px, 100vmin);
+  height: min(500px, 100vmin);
+  margin: 0 auto;
+}
