@@ -155,11 +155,18 @@ function draw() {
 
 draw();
 
-parent.postMessage({ app: 'wokwi', command: 'listen', version: 1 }, 'https://wokwi.com');
+// Workaround for a Wokwi sometimes missing the first message
+let listener = setInterval(() => {
+  parent.postMessage({ app: 'wokwi', command: 'listen', version: 1 }, 'https://wokwi.com');
+}, 200);
 
 window.addEventListener('message', ({ data }) => {
   if (data.neopixels) {
     pixels.set(data.neopixels);
     draw();
+    if (listener) {
+      clearInterval(listener);
+      listener = null;
+    }
   }
 });
