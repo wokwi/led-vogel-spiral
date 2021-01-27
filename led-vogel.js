@@ -44,10 +44,10 @@ const sourceF = `
     for (int n = 1; n <= 256; n++) {
       float r = sqrt(float(n)) / 34.;
       float theta = 137.508 / 180. * pi * float(n);
-      float distance = length(polar - vec2(r * cos(theta), r * sin(theta)));
+      float distance = length(polar + vec2(-r * cos(theta), r * sin(theta)));
       float pixelAlpha = clamp(1. - 40. * distance, 0., 1.);
       float row = float((n - 1) / 16);
-      vec2 texturePos = vec2(float(n - 1) / 16. - row / 16., row / 16.);
+      vec2 texturePos = vec2(float(n - 1) / 16., row / 16.);
       vec4 textureColor = texture2D(u_pixels, texturePos);
       // colors are actually encoded in GBR format
       color.xyz += pixelAlpha * vec3(textureColor.g, textureColor.b, textureColor.r);
