@@ -113,10 +113,14 @@ gl.vertexAttribPointer(attribute, 3, gl.FLOAT, false, 0, 0);
 
 const resHandle = getUniformLocation(program, 'u_resolution');
 const pixelsHandle = getUniformLocation(program, 'u_pixels');
-canvas.width = canvas.clientWidth;
-canvas.height = canvas.clientHeight;
-gl.viewport(0, 0, canvas.width, canvas.height);
-gl.uniform2f(resHandle, canvas.width, canvas.height);
+
+function updateCanvasSize() {
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform2f(resHandle, canvas.width, canvas.height);
+}
+updateCanvasSize();
 
 const texture = gl.createTexture();
 gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -165,6 +169,10 @@ draw();
 
 // Workaround for a Wokwi sometimes missing the first message
 let listener = setInterval(() => {
+  if (canvas.width !== canvas.clientWidth) {
+    updateCanvasSize();
+    draw();
+  }
   parent.postMessage({ app: 'wokwi', command: 'listen', version: 1 }, 'https://wokwi.com');
 }, 200);
 
